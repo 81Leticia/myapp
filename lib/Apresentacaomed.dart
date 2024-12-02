@@ -101,6 +101,7 @@ class _ApresentacaomedState extends State<Apresentacaomed> {
               color: Colors.black,
             ),
           ),
+
           SizedBox(height: 5),
           Text(
             '• Medicina - Universidade XYZ\n• Especialização em Cardiologia - Hospital ABC',
