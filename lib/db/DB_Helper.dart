@@ -33,7 +33,6 @@ class DBHelper {
       print('Coluna: ${row['name']}');  // Exibe o nome de cada coluna
     }
   }
-
 }
 
 
