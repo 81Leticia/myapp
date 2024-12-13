@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 //import 'package:project/db/database_helper.dart';
-
 import 'database_helper.dart';
-
 
 class CadastroMedico extends StatelessWidget {
   final TextEditingController nomeController = TextEditingController();
   final TextEditingController especialidadeController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {

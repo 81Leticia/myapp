@@ -78,7 +78,6 @@ class _homState extends State<hom> {
             const SizedBox(height: 10),
             InkWell(
               onTap: () {
-                 
                 print('Dr. Devid Souza!');
               },
               child: Text(

@@ -40,7 +40,6 @@ class DatabaseHelper {
    ''');
   }
 
-
   Future<void> inserirMedico(Map<String, dynamic> medico) async {
     final db = await instance.database;
     await db.insert('medicos', medico);
