@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/hom.dart';
+import 'package:myapp/domain/escolhahosp.dart';
+//import 'package:myapp/escolhahosp.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+class Encontrehosp extends StatefulWidget {
+  const Encontrehosp({super.key});
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  State<Encontrehosp> createState() => _EncontrehospState();
 }
 
-class _DetailPageState extends State<DetailPage> {
+class _EncontrehospState extends State<Encontrehosp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +32,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             const SizedBox(height: 10),
             const Text(
-              'Primeiro encontre seu Médico',
+              'Primeiro encontre seu hospital',
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 40,
@@ -41,7 +42,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
             const SizedBox(height: 10),
             const Text(
-              '*Clique no ícone do Médico ou  aperte em enter;',
+              '*Clique no ícone do Hospital ou aperte em enter;',
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 20,
@@ -49,35 +50,38 @@ class _DetailPageState extends State<DetailPage> {
                 fontWeight: FontWeight.w600,
               ),
             ),
+            const SizedBox(height: 20),
             IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return hom();
-                    },
-                  ),
-                );
+                // Ação ao clicar no ícone do hospital
               },
-              icon: Icon(
-                Icons.medical_services_outlined,
-                color: Color(0xFF44A4D7),
-                size: 150,
+              icon: const Icon(
+                Icons.local_hospital,
+                color: Colors.black26,
+                size: 140,
               ),
             ),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
-                side: const BorderSide(color: Color(0xFF44A4D7), width: 2),
+                side: const BorderSide(color: Color(0x197DB2), width: 2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14),
                 ),
               ),
-              onPressed: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 11.0, horizontal: 43.0),
+              onPressed: () {
+                Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Escolhahosp();
+                        },
+                      ),
+                    );
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 11.0, horizontal: 43.0),
                 child: Text(
                   'PROCURAR',
                   style: TextStyle(
@@ -98,14 +102,11 @@ class _DetailPageState extends State<DetailPage> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_outlined), label: 'Calendário'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: 'Calendário'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.edit_sharp), label: 'Agenda'),
+          BottomNavigationBarItem(icon: Icon(Icons.edit_sharp), label: 'Agenda'),
           BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Ficha'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.view_agenda_rounded), label: 'B'),
+          BottomNavigationBarItem(icon: Icon(Icons.view_agenda_rounded), label: 'B'),
         ],
       ),
     );
