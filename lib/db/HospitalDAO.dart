@@ -38,5 +38,4 @@ class HospitalDAO{
       return Hospital.fromJson(maps[i]);
     });
   }
-
 }
