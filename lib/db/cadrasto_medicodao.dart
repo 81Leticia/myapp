@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:project/db/database_helper.dart';
 import 'database_helper.dart';
 
 class CadastroMedico extends StatelessWidget {
