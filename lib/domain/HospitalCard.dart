@@ -18,7 +18,6 @@ class _HospitalListaState extends State<HospitalLista> {
   void initState() {
     super.initState();
     loadData();
-    DBHelper().getTableInfo();
   }
 
   loadData() async {

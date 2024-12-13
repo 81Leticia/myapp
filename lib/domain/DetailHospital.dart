@@ -38,7 +38,7 @@ class _HospitalDetalhesState extends State<HospitalDetalhes> {
               ),
               padding: const EdgeInsets.all(16.0),
               child: Image.asset("",
-                //"widget.hospital.fotoUrl,
+                "widget.hospital.fotoUrl,
                 width: double.infinity,
                 height: 200,
                 fit: BoxFit.cover,

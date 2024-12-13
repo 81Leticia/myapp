@@ -6,9 +6,7 @@ class Hospital {
   late String cep;
   late String telefone;
   late String email;
-  //String fotoUrl = "null"; // Valor padrão para fotoUrl
 
-  // Construtor principal
   Hospital({
     this.id,
     required this.nome,
@@ -17,19 +15,17 @@ class Hospital {
     required this.cep,
     required this.telefone,
     required this.email,
-    // this.fotoUrl = "null", // Valor padrão opcional
   });
 
-  // Construtor para criar a instância a partir de um JSON
+
   Hospital.fromJson(Map<String, dynamic> json) {
-    id = json['id']; // Valor padrão para id
-    nome = json['nome'] ?? 'Nome não disponível'; // Valor padrão
+    id = json['id'];
+    nome = json['nome'] ?? 'Nome não disponível';
     endereco = json['endereco'] ?? 'Endereço não disponível';
     cidade = json['cidade'] ?? 'Cidade não informada';
     cep = json['cep'] ?? '00000-000';
     telefone = json['telefone'] ?? 'Telefone não informado';
     email = json['email'] ?? 'Email não informado';
-    //fotoUrl = json['fotoUrl'] ?? "null"; // Valor padrão
   }
 
   Map<String, dynamic> toJson() {
@@ -41,7 +37,6 @@ class Hospital {
       'telefone': telefone,
       'email': email,
       'cep': cep,
-      // 'fotoUrl': fotoUrl,
     };
   }
 }

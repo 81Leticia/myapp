@@ -25,15 +25,12 @@ class HospitalDAO{
     db.insert("HOSPITAIS",hosp.toJson());
   }
 
-  // Função para listar todos os hospitais
-  // Função para listar todos os hospitais
+
   Future<List<Hospital>> listarHospital() async {
     final db = await DBHelper().initDB();
 
-    // Consulta todos os hospitais na tabela HOSPITAIS
     final List<Map<String, dynamic>> maps = await db.query('HOSPITAIS');
 
-    // Converte o resultado em uma lista de objetos Hospital
     return List.generate(maps.length, (i) {
       return Hospital.fromJson(maps[i]);
     });
