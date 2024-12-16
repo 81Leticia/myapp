@@ -8,7 +8,6 @@ class ListarMedicos extends StatefulWidget {
   _ListarMedicosState createState() => _ListarMedicosState();
 }
 
-
 class _ListarMedicosState extends State<ListarMedicos> {
   late Future<List<Map<String, dynamic>>> medicos;
 
@@ -18,7 +17,6 @@ class _ListarMedicosState extends State<ListarMedicos> {
     super.initState();
     medicos = DatabaseHelper.instance.listarMedicos();
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,6 @@ class DatabaseHelper {
 
   static Database? _database;
 
-
   DatabaseHelper._init();
 
 
