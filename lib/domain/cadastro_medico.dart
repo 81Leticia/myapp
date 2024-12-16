@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import '../db/DBHelper.dart';
+import 'package:myapp/db/DBHelper.dart';
 
 class CadastroMedico extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _CadastroMedicoState extends State<CadastroMedico> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _telefoneController = TextEditingController();
 
-  final DBHelper _dbHelper = DBHelper();
+  final DBHelper _dbHelper = DBHelper.instance;
 
   void _salvarMedico() async {
     String nome = _nomeController.text;
@@ -30,26 +30,30 @@ class _CadastroMedicoState extends State<CadastroMedico> {
       return;
     }
 
-    // Agora utilizando o tipo correto Database
-    Database? db = await _dbHelper.initDB(); // Obtenha o Database correto
-    await db?.insert('MEDICOS', {
-      'nome': nome,
-      'especialidade': especialidade,
-      'crm': crm,
-      'email': email,
-      'telefone': telefone,
-    });
+    try {
+      Database db = await _dbHelper.database;
+      await db.insert('medicos', {
+        'nome': nome,
+        'especialidade': especialidade,
+        'crm': crm,
+        'email': email,
+        'telefone': telefone,
+      });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Médico cadastrado com sucesso!")),
-    );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Médico cadastrado com sucesso!")),
+      );
 
-    // Limpar os campos
-    _nomeController.clear();
-    _especialidadeController.clear();
-    _crmController.clear();
-    _emailController.clear();
-    _telefoneController.clear();
+      _nomeController.clear();
+      _especialidadeController.clear();
+      _crmController.clear();
+      _emailController.clear();
+      _telefoneController.clear();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Erro ao cadastrar médico: $e")),
+      );
+    }
   }
 
   @override
@@ -81,7 +85,6 @@ class _CadastroMedicoState extends State<CadastroMedico> {
           ),
         ),
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Colors.grey,
         selectedItemColor: Colors.blueAccent,
@@ -89,14 +92,11 @@ class _CadastroMedicoState extends State<CadastroMedico> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_outlined), label: 'Calendário'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: 'Calendário'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.edit_sharp), label: 'Agenda'),
+          BottomNavigationBarItem(icon: Icon(Icons.edit_sharp), label: 'Agenda'),
           BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Ficha'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.view_agenda_rounded), label: 'B'),
+          BottomNavigationBarItem(icon: Icon(Icons.view_agenda_rounded), label: 'B'),
         ],
       ),
     );

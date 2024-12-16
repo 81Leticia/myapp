@@ -1,45 +1,52 @@
-import 'package:path/path.dart';
+import 'dart:async';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
 
 class DBHelper {
-  static Database? _db;
+  static final DBHelper instance = DBHelper._init();
+
+  static Database? _database;
+
+  DBHelper._init();
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
 
 
-  Future<Database?> initDB() async {
-    String path = join(await getDatabasesPath(), 'medicos.db');
-    _db = await openDatabase(path, version: 1, onCreate: (db, version) async {
-      String sql = '''
-        CREATE TABLE MEDICOS (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          nome TEXT NOT NULL,
-          especialidade TEXT NOT NULL,
-          crm TEXT NOT NULL UNIQUE,
-          email TEXT NOT NULL,
-          telefone TEXT NOT NULL
-        );
-      ''';
-      await db.execute(sql);
-
-      sql = '''
-        INSERT INTO MEDICOS (nome, especialidade, crm, email, telefone) VALUES 
-        ('Dr. João Silva', 'Cardiologista', '12345-SP', 'joao.silva@hospital.com', '(11) 98765-4321'),
-        ('Dra. Maria Fernanda', 'Ginecologista', '67890-RJ', 'maria.fernanda@hospital.com', '(21) 91234-5678'),
-        ('Dr. Pedro Costa', 'Pediatra', '54321-MG', 'pedro.costa@hospital.com', '(31) 99876-5432'),
-        ('Dra. Ana Souza', 'Endocrinologista', '98765-PR', 'ana.souza@hospital.com', '(41) 96543-2109');
-      ''';
-      await db.execute(sql);
-    });
-
-    return _db;
+    _database = await _initDB('hospital.db');
+    return _database!;
   }
 
-  Future<List<Map<String, dynamic>>> listarMedicos() async {
-    final db = await initDB();
-    return await db!.query('MEDICOS');
+
+  Future<Database> _initDB(String filePath) async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, filePath);
+
+
+    return await openDatabase(path, version: 1, onCreate: _createDB);
   }
+
+
+  Future _createDB(Database db, int version) async {
+    await db.execute('''
+     CREATE TABLE medicos (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       nome TEXT NOT NULL,
+       especialidade TEXT NOT NULL
+     )
+   ''');
+  }
+
 
   Future<void> inserirMedico(Map<String, dynamic> medico) async {
-    final db = await initDB();
-    await db!.insert('MEDICOS', medico);
+    final db = await instance.database;
+    await db.insert('medicos', medico);
+  }
+
+
+  Future<List<Map<String, dynamic>>> listarMedicos() async {
+    final db = await instance.database;
+    return await db.query('medicos');
   }
 }

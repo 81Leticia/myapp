@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/db/DBHelper.dart';
-import 'package:myapp/domain/cadastro_medicodao.dart';
-
+import 'package:myapp/domain/Apresentacaomed.dart';
+import 'package:myapp/domain/cadastro_medico.dart';
 
 class ListarMedicos extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _ListarMedicosState extends State<ListarMedicos> {
   @override
   void initState() {
     super.initState();
-    medicos = DBHelper().initDB().then((value) => DBHelper().listarMedicos()); // Chama o método de listagem
+    medicos = DBHelper.instance.database.then((db) => DBHelper.instance.listarMedicos());
   }
 
   @override
@@ -26,13 +26,12 @@ class _ListarMedicosState extends State<ListarMedicos> {
           IconButton(
             icon: Icon(Icons.person_add_alt_1),
             onPressed: () async {
-              // Ação para adicionar médico
               await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CadastroMedico()),
               );
               setState(() {
-                medicos = DBHelper().initDB().then((value) => DBHelper().listarMedicos()); // Atualiza a lista de médicos
+                medicos = DBHelper.instance.database.then((db) => DBHelper.instance.listarMedicos());
               });
             },
           ),
@@ -51,9 +50,22 @@ class _ListarMedicosState extends State<ListarMedicos> {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               final medico = snapshot.data![index];
-              return ListTile(
-                title: Text(medico['nome']),
-                subtitle: Text(medico['especialidade']),
+              return Card(
+                elevation: 5,
+                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: ListTile(
+                  contentPadding: EdgeInsets.all(16),
+                  title: Text(medico['nome'], style: TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Text(medico['especialidade']),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Apresentacaomed(),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           );
@@ -66,14 +78,11 @@ class _ListarMedicosState extends State<ListarMedicos> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_outlined), label: 'Calendário'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: 'Calendário'),
           BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.edit_sharp), label: 'Agenda'),
+          BottomNavigationBarItem(icon: Icon(Icons.edit_sharp), label: 'Agenda'),
           BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Ficha'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.view_agenda_rounded), label: 'B'),
+          BottomNavigationBarItem(icon: Icon(Icons.view_agenda_rounded), label: 'B'),
         ],
       ),
     );

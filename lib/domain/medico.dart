@@ -1,11 +1,15 @@
 class Medico {
-  int? id;
-  String nome;
-  String especialidade;
+  final int id;
+  final String nome;
+  final String especialidade;
 
-  Medico({this.id, required this.nome, required this.especialidade});
+  Medico({
+    required this.id,
+    required this.nome,
+    required this.especialidade,
+  });
 
-  // Método para converter JSON em objeto Medico
+
   factory Medico.fromJson(Map<String, dynamic> json) {
     return Medico(
       id: json['id'],
@@ -14,7 +18,7 @@ class Medico {
     );
   }
 
-  // Método para converter objeto Medico em JSON
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
