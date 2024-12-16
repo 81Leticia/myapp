@@ -11,7 +11,6 @@ class cadastro extends StatefulWidget {
   getUser() {}
 }
 
-
 class _cadastroState extends State<cadastro> {
   TextEditingController emailController = TextEditingController();
   TextEditingController senhaController = TextEditingController();
