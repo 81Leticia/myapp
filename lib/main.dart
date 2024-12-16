@@ -4,6 +4,6 @@ import 'package:myapp/menu_page.dart';
 void main() {
   runApp(
     MaterialApp(
-      home:MenuPage()   ),
+      home:Login()   ),
   );
 }
