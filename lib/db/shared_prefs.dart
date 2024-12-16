@@ -11,6 +11,7 @@ class SharedPrefs {
     bool? userStatus = instance.getBool('USER');
 
 
+
     return userStatus ?? false;
   }
 }

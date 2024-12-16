@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:myapp/hom.dart';
+
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -50,16 +52,7 @@ class _DetailPageState extends State<DetailPage> {
               ),
             ),
             IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return hom();
-                    },
-                  ),
-                );
-              },
+              onPressed: () {},
               icon: Icon(
                 Icons.medical_services_outlined,
                 color: Color(0xFF44A4D7),

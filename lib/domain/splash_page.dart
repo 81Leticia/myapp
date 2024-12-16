@@ -19,7 +19,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   checkUserStatus() async {
-
     await Future.delayed(const Duration(seconds: 3));
 
 

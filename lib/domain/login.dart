@@ -187,6 +187,7 @@ class _LoginState extends State<Login> {
         SharedPrefs().setUser(true);
 
 
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -194,6 +195,7 @@ class _LoginState extends State<Login> {
               return DetailPage();
             },
           ),
+
         );
       } else {
         print('E-mail e/ou Senha incorreto(s)');
