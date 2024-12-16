@@ -1,5 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/domain/user.dart';
+import '../db/user_dao.dart';
 
 
 class cadastro extends StatefulWidget {
@@ -11,10 +14,12 @@ class cadastro extends StatefulWidget {
   getUser() {}
 }
 
+
 class _cadastroState extends State<cadastro> {
   TextEditingController emailController = TextEditingController();
   TextEditingController senhaController = TextEditingController();
   TextEditingController confirmSenhaController = TextEditingController();
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -71,8 +76,8 @@ class _cadastroState extends State<cadastro> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 50),
-                        SizedBox(height: 10),
+                        SizedBox(height: 60),
+
                         TextFormField(
                           controller: emailController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -215,7 +220,7 @@ class _cadastroState extends State<cadastro> {
     );
   }
   Future<void> onPressed() async {
-    // Validar o Form
+
     if (formKey.currentState!.validate()) {
       String email = emailController.text;
       String senha = senhaController.text;
@@ -225,17 +230,5 @@ class _cadastroState extends State<cadastro> {
       Navigator.pop(context);
     }
   }
-}
-
-class GoogleFonts {
-  static montserrat({required int fontSize, required Color color, required FontWeight fontWeight}) {}
-}
-
-class UserDao {
-  void saveUser(User user) {}
-}
-
-class User {
-  User(String email, String senha);
 }
 

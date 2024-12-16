@@ -1,6 +1,8 @@
-import 'package:aula_923/db/db_helper.dart';
-import 'package:aula_923/domain/user.dart';
+
 import 'package:sqflite/sqflite.dart';
+import 'package:myapp/domain/cadastro.dart';
+import '../domain/user.dart';
+import 'db_helper.dart';
 
 class UserDao {
   autenticar(String username, String password) async {

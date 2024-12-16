@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/DetailPage.dart';
+import 'package:myapp/domain/DetailPage.dart';
+import '../db/shared_prefs.dart';
 import 'cadastro.dart';
-// Se a classe UserDao estiver em um arquivo separado
+import 'package:myapp/db/user_dao.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -68,7 +70,7 @@ class _LoginState extends State<Login> {
                       TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          labelText: 'Login:',
+                          labelText: 'Email:',
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -173,9 +175,9 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> onPressed() async {
-    // Validar os campos de e-mail e senha
+
     if (formKey.currentState!.validate()) {
-      // Recuperar os dados dos TextFormFields
+
       String email = emailController.text;
       String senha = senhaController.text;
 
@@ -184,7 +186,7 @@ class _LoginState extends State<Login> {
       if (auth) {
         SharedPrefs().setUser(true);
 
-        // Navegar p/ HomePage
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -198,3 +200,4 @@ class _LoginState extends State<Login> {
       }
     }
   }
+}

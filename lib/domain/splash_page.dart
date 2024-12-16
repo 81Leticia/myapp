@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/DetailPage.dart';
-import 'package:myapp/cadastro.dart';
-import 'package:myapp/main.dart';
+import 'package:myapp/domain/DetailPage.dart';
+import 'package:myapp/domain/cadastro.dart';
+import 'package:myapp/domain/login.dart';
+import 'package:myapp/domain/main.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -18,25 +19,25 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   checkUserStatus() async {
-    // Aguarda por 3 segundos para simular carregamento
+
     await Future.delayed(const Duration(seconds: 3));
 
-    // Verifica status do usuário
+
     bool userStatus = await cadastro().getUser();
 
-    // Navega para a tela correta com base no estado do usuário
+
     if (userStatus) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const DetailPage(), // Tela principal
+          builder: (context) => const DetailPage(),
         ),
       );
     } else {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const longin(), // Tela de login
+          builder: (context) => const Login(),
         ),
       );
     }
