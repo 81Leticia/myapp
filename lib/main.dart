@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Hospital Regional',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home:ListarMedicos(),
+      home:MenuPage(),
     );
   }
 }

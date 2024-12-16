@@ -10,4 +10,3 @@ class Database {
     Menu(Icons.person, 'Perfil'),
   ];
 }
-

@@ -13,7 +13,6 @@ class Escolhahosp extends StatefulWidget {
  State<Escolhahosp> createState() => _EscolhahospState();
 }
 
-
 class _EscolhahospState extends State<Escolhahosp> {
  bool hospitalA = false;
  bool hospitalB = false;

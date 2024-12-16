@@ -9,13 +9,9 @@ class Encontreseumed extends StatefulWidget {
  const Encontreseumed({super.key});
 
 
-
-
  @override
  State<Encontreseumed> createState() => _EncontreseumedState();
 }
-
-
 
 
 class _EncontreseumedState extends State<Encontreseumed> {

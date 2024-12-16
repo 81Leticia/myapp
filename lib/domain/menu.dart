@@ -6,4 +6,3 @@ class Menu {
 
   Menu(this.icon, this.nome);
 }
-
