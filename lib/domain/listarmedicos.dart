@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/db/database_helper.dart';
-import '../db/cadastromedicodao.dart';
+//import 'package:project/db/database_helper.dart';
+//import 'package:project/db/cadastro_medicodao.dart';
+
+import 'package:myapp/domain/cadastro_medicodao.dart';
+import '../db/database_helper.dart';
 
 
 class ListarMedicos extends StatefulWidget {
   @override
   _ListarMedicosState createState() => _ListarMedicosState();
 }
+
 
 class _ListarMedicosState extends State<ListarMedicos> {
   late Future<List<Map<String, dynamic>>> medicos;
@@ -17,6 +21,7 @@ class _ListarMedicosState extends State<ListarMedicos> {
     super.initState();
     medicos = DatabaseHelper.instance.listarMedicos();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,3 +79,4 @@ class _ListarMedicosState extends State<ListarMedicos> {
     );
   }
 }
+

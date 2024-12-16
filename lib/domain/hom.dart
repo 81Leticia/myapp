@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:myapp/Apresentacaomed.dart';
 import 'package:myapp/domain/Apresentacaomed.dart';
 
 class hom extends StatefulWidget {
@@ -7,7 +8,6 @@ class hom extends StatefulWidget {
   @override
   State<hom> createState() => _homState();
 }
-
 class _homState extends State<hom> {
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,6 @@ class _homState extends State<hom> {
             const SizedBox(height: 10),
             InkWell(
               onTap: () {
-                 
                 print('Dr. Devid Souza!');
               },
               child: Text(
@@ -134,3 +133,5 @@ class _homState extends State<hom> {
     );
   }
 }
+
+

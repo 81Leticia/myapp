@@ -1,11 +1,10 @@
-import 'package:myapp/domain/listarmedicos.dart';
+import 'package:myapp/domain/cadastro_medicodao.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
     MaterialApp(
-        home: ListarMedicos()
+        home: CadastroMedico()
     ),
   );
 }
-
