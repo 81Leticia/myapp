@@ -18,6 +18,7 @@ class DBHelper {
   }
 
 
+
   Future<FutureOr<void>> onCreate(Database db, int version) async {
     String sql = "CREATE TABLE USER (username varchar(100) PRIMARY KEY, password varchar(100))";
     await db.execute(sql);

@@ -9,7 +9,6 @@ class User {
     json['username'] = username;
     json['password'] = password;
 
-
     return json;
   }
 }

@@ -17,6 +17,7 @@ class UserDao {
   }
 
 
+
   saveUser(User user) async {
     Database db = await DBHelper().initDB();
     db.insert('USER', user.toJson());
