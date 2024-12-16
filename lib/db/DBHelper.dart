@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 class DBHelper {
   static Database? _db;
 
-  // Inicializa o banco de dados
+
   Future<Database?> initDB() async {
     String path = join(await getDatabasesPath(), 'medicos.db');
     _db = await openDatabase(path, version: 1, onCreate: (db, version) async {
@@ -20,7 +20,6 @@ class DBHelper {
       ''';
       await db.execute(sql);
 
-      // Inserção de dados iniciais
       sql = '''
         INSERT INTO MEDICOS (nome, especialidade, crm, email, telefone) VALUES 
         ('Dr. João Silva', 'Cardiologista', '12345-SP', 'joao.silva@hospital.com', '(11) 98765-4321'),
@@ -34,13 +33,11 @@ class DBHelper {
     return _db;
   }
 
-  // Método para listar médicos
   Future<List<Map<String, dynamic>>> listarMedicos() async {
     final db = await initDB();
     return await db!.query('MEDICOS');
   }
 
-  // Método para inserir um médico
   Future<void> inserirMedico(Map<String, dynamic> medico) async {
     final db = await initDB();
     await db!.insert('MEDICOS', medico);

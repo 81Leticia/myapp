@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart'; // Certifique-se de importar o sqflite
+import 'package:sqflite/sqflite.dart';
 import '../db/DBHelper.dart';
 
 class CadastroMedico extends StatefulWidget {
@@ -115,4 +115,3 @@ class _CadastroMedicoState extends State<CadastroMedico> {
     );
   }
 }
-
