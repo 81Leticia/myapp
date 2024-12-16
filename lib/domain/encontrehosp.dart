@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/escolhahosp.dart';
+import 'package:myapp/domain/escolhahosp.dart';
 
 class Encontrehosp extends StatefulWidget {
   const Encontrehosp({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medisoft/db/database_helper.dart';
-import 'cadastro_medico.dart';
+import 'package:myapp/db/database_helper.dart';
+import '../db/cadastromedicodao.dart';
 
 
 class ListarMedicos extends StatefulWidget {
