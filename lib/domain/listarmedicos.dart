@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/db/DBHelper.dart';
 import 'package:myapp/domain/Apresentacaomed.dart';
 import 'package:myapp/domain/cadastro_medico.dart';
+import 'package:myapp/domain/medico.dart';  // Importe a classe Medico
 
 class ListarMedicos extends StatefulWidget {
   @override
@@ -9,12 +10,13 @@ class ListarMedicos extends StatefulWidget {
 }
 
 class _ListarMedicosState extends State<ListarMedicos> {
-  late Future<List<Map<String, dynamic>>> medicos;
+  late Future<List<Medico>> medicos;  // Alterado para List<Medico>
 
   @override
   void initState() {
     super.initState();
-    medicos = DBHelper.instance.database.then((db) => DBHelper.instance.listarMedicos());
+    // Agora, estamos carregando uma lista de Medicos, não mais Map
+    medicos = DBHelper.instance.listarMedicos();  // Chama o método diretamente
   }
 
   @override
@@ -26,18 +28,20 @@ class _ListarMedicosState extends State<ListarMedicos> {
           IconButton(
             icon: Icon(Icons.person_add_alt_1),
             onPressed: () async {
+              // Navega para a tela de cadastro de médicos
               await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CadastroMedico()),
               );
+              // Após voltar, recarregue a lista de médicos
               setState(() {
-                medicos = DBHelper.instance.database.then((db) => DBHelper.instance.listarMedicos());
+                medicos = DBHelper.instance.listarMedicos();  // Recarrega os médicos
               });
             },
           ),
         ],
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
+      body: FutureBuilder<List<Medico>>(
         future: medicos,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -49,19 +53,20 @@ class _ListarMedicosState extends State<ListarMedicos> {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              final medico = snapshot.data![index];
+              final medico = snapshot.data![index];  // Agora é um objeto Medico
               return Card(
                 elevation: 5,
                 margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: ListTile(
                   contentPadding: EdgeInsets.all(16),
-                  title: Text(medico['nome'], style: TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text(medico['especialidade']),
+                  title: Text(medico.nome, style: TextStyle(fontWeight: FontWeight.bold)),  // Agora usando Medico
+                  subtitle: Text(medico.especialidade),  // Agora usando Medico
                   onTap: () {
+                    // Passa o Medico para a tela de apresentação
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Apresentacaomed(),
+                        builder: (context) => Apresentacaomed(medico: medico),  // Passando o objeto Medico
                       ),
                     );
                   },
@@ -88,4 +93,3 @@ class _ListarMedicosState extends State<ListarMedicos> {
     );
   }
 }
-
