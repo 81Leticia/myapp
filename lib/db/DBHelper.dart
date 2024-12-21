@@ -52,7 +52,6 @@ class DBHelper {
     return result.map((json) => Medico.fromJson(json)).toList();
   }
 
-  // Atualizar médico no banco de dados
   Future<int> updateMedico(Medico medico) async {
     final db = await instance.database;
     return await db.update(
