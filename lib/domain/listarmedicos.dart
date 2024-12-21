@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myapp/db/DBHelper.dart';
 import 'package:myapp/domain/Apresentacaomed.dart';
 import 'package:myapp/domain/cadastro_medico.dart';
-import 'package:myapp/domain/medico.dart';  // Importe a classe Medico
+import 'package:myapp/domain/medico.dart';  
 
 class ListarMedicos extends StatefulWidget {
   @override
@@ -10,13 +10,12 @@ class ListarMedicos extends StatefulWidget {
 }
 
 class _ListarMedicosState extends State<ListarMedicos> {
-  late Future<List<Medico>> medicos;  // Alterado para List<Medico>
+  late Future<List<Medico>> medicos;  
 
   @override
   void initState() {
     super.initState();
-    // Agora, estamos carregando uma lista de Medicos, não mais Map
-    medicos = DBHelper.instance.listarMedicos();  // Chama o método diretamente
+    medicos = DBHelper.instance.listarMedicos();  
   }
 
   @override
@@ -28,14 +27,12 @@ class _ListarMedicosState extends State<ListarMedicos> {
           IconButton(
             icon: Icon(Icons.person_add_alt_1),
             onPressed: () async {
-              // Navega para a tela de cadastro de médicos
               await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => CadastroMedico()),
               );
-              // Após voltar, recarregue a lista de médicos
               setState(() {
-                medicos = DBHelper.instance.listarMedicos();  // Recarrega os médicos
+                medicos = DBHelper.instance.listarMedicos(); 
               });
             },
           ),
@@ -53,20 +50,19 @@ class _ListarMedicosState extends State<ListarMedicos> {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              final medico = snapshot.data![index];  // Agora é um objeto Medico
+              final medico = snapshot.data![index];  
               return Card(
                 elevation: 5,
                 margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: ListTile(
                   contentPadding: EdgeInsets.all(16),
-                  title: Text(medico.nome, style: TextStyle(fontWeight: FontWeight.bold)),  // Agora usando Medico
-                  subtitle: Text(medico.especialidade),  // Agora usando Medico
+                  title: Text(medico.nome, style: TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Text(medico.especialidade),
                   onTap: () {
-                    // Passa o Medico para a tela de apresentação
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Apresentacaomed(medico: medico),  // Passando o objeto Medico
+                        builder: (context) => Apresentacaomed(medico: medico), 
                       ),
                     );
                   },
