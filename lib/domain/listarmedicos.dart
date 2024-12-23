@@ -22,7 +22,7 @@ class _ListarMedicosState extends State<ListarMedicos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Listar Médicos'),
+        title: Text('Médicos Cadastrados'),
         actions: [
           IconButton(
             icon: Icon(Icons.person_add_alt_1),
