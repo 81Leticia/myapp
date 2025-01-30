@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:myapp/domain/DetailPage.dart';
 import 'package:myapp/domain/cadastro.dart';
 import 'package:myapp/domain/login.dart';
-import 'package:myapp/domain/main.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -22,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
     await Future.delayed(const Duration(seconds: 3));
 
 
-    bool userStatus = await cadastro().getUser();
+    bool userStatus = await const cadastro().getUser();
 
 
     if (userStatus) {
@@ -46,7 +45,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color(0xFF44A4D7),
+        color: const Color(0xFFABD744),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

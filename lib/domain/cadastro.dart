@@ -21,6 +21,7 @@ class _cadastroState extends State<cadastro> {
   TextEditingController emailController = TextEditingController();
   TextEditingController senhaController = TextEditingController();
   TextEditingController confirmSenhaController = TextEditingController();
+  TextEditingController TelefoneController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -100,6 +101,30 @@ class _cadastroState extends State<cadastro> {
                         ),
                         SizedBox(height: 10),
                         TextFormField(
+                          controller: TelefoneController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Campo telefone é obrigatório.';
+                            } else {
+                              return 'Você precisa de um telefone válido.';
+                            }
+                          },
+                          cursorColor: const Color(0xFF7C4DFF),
+                          decoration: InputDecoration(
+                            labelText: 'Telefone:',
+                            prefixIcon: const Icon(Icons.phone_outlined),
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {},
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            ),
+                          ),
+                        SizedBox(height: 10),
+                        TextFormField(
                           controller: senhaController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           obscureText: true,
@@ -136,6 +161,7 @@ class _cadastroState extends State<cadastro> {
                           ),
                           cursorColor: const Color(0xFF10397B),
                         ),
+                        SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -159,6 +185,7 @@ class _cadastroState extends State<cadastro> {
                                 ),
                               ),
                             ),
+
                           ],
                         ),
                         SizedBox(height: 15),
