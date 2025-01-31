@@ -69,17 +69,40 @@ class _cadastroState extends State<cadastro> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Criar uma conta',
+                                  'Seja bem-vindo!',
                                   style: TextStyle(
                                     fontSize: 35,
                                     fontWeight: FontWeight.bold,
                                   ),
+
                                 ),
                               ],
+
                             ),
                           ),
                         ),
-                        SizedBox(height: 60),
+
+                        Container(
+                          margin: const EdgeInsets.only(top: 5),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 30, right: 30),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Cadastre-se',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+
+                                ),
+                              ],
+
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 50),
 
                         TextFormField(
                           controller: emailController,
@@ -161,7 +184,7 @@ class _cadastroState extends State<cadastro> {
                           ),
                           cursorColor: const Color(0xFF10397B),
                         ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
