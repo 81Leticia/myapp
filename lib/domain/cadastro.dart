@@ -15,13 +15,13 @@ class cadastro extends StatefulWidget {
 }
 
 
-
-
 class _cadastroState extends State<cadastro> {
   TextEditingController emailController = TextEditingController();
   TextEditingController senhaController = TextEditingController();
   TextEditingController confirmSenhaController = TextEditingController();
-  TextEditingController TelefoneController = TextEditingController();
+  TextEditingController dddController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController citiesController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -124,28 +124,38 @@ class _cadastroState extends State<cadastro> {
                         ),
                         SizedBox(height: 10),
                         TextFormField(
-                          controller: TelefoneController,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Campo telefone é obrigatório.';
-                            } else {
-                              return 'Você precisa de um telefone válido.';
-                            }
-                          },
-                          cursorColor: const Color(0xFF7C4DFF),
+                          controller: dddController,
                           decoration: InputDecoration(
-                            labelText: 'Telefone:',
-                            prefixIcon: const Icon(Icons.phone_outlined),
+                            labelText: 'Ddd:',
                             suffixIcon: IconButton(
+                              onPressed: onPresseDddButton,
                               icon: const Icon(Icons.search),
-                              onPressed: () {},
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
+                            cursorColor: const Color(0xFF7C4DFF),
                             ),
                           ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                      controller: dddController,
+                      validator: (value) {
+                        if (value!.isNotEmpty) {
+                          return null;
+                        } else {
+                          return "Você precisa digitar um endereço válido!";
+                        }
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Endereço:',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        cursorColor: const Color(0xFF7C4DFF),
+                      ),
+                    ),
+                ),
                         SizedBox(height: 10),
                         TextFormField(
                           controller: senhaController,
@@ -184,7 +194,28 @@ class _cadastroState extends State<cadastro> {
                           ),
                           cursorColor: const Color(0xFF10397B),
                         ),
-                        SizedBox(height: 20),
+
+                    Future<void> onPressedDddButton() async {
+                        String ddd = dddController.text;
+                        try {
+                          Ddd ddd = await DddApi().findAddressByDdd(ddd);
+                          stateController.text = ddd.state;
+                          citiesController.text = ddd.cities;
+
+                        } catch (e) {
+                          showSnackBar('Ocorreu um erro inesperado!');
+                        }
+                      }
+
+                      showSnackBar(String snackBarMessage) {
+                        SnackBar snackBar = SnackBar(
+                        content: Text(snackBarMessage),
+        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+
+
+            SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
