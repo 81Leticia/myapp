@@ -1,12 +1,12 @@
-class ddd {
+class DDD {
 String? state;
 List<String>? cities;
 
-ddd({
+DDD({
   this.state,
   this.cities});
 
-ddd.fromJson(Map<String, dynamic> json) {
+DDD.fromJson(Map<String, dynamic> json) {
 state = json['state'];
 cities = json['cities'].cast<String>();
 }

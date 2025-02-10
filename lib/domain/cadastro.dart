@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/api/ddd_api.dart';
 import 'package:myapp/domain/user.dart';
 import '../db/user_dao.dart';
-
+import 'ddd.dart';
 
 class cadastro extends StatefulWidget {
   const cadastro({super.key});
@@ -13,7 +14,6 @@ class cadastro extends StatefulWidget {
 
   getUser() {}
 }
-
 
 class _cadastroState extends State<cadastro> {
   TextEditingController emailController = TextEditingController();
@@ -45,7 +45,7 @@ class _cadastroState extends State<cadastro> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 16),
+
               Container(
                 height: 600,
                 width: 400,
@@ -71,39 +71,16 @@ class _cadastroState extends State<cadastro> {
                                 Text(
                                   'Seja bem-vindo!',
                                   style: TextStyle(
-                                    fontSize: 35,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.bold,
                                   ),
-
                                 ),
                               ],
-
                             ),
                           ),
                         ),
 
-                        Container(
-                          margin: const EdgeInsets.only(top: 5),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 30, right: 30),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Cadastre-se',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-
-                                ),
-                              ],
-
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 50),
-
+                        SizedBox(height: 10),
                         TextFormField(
                           controller: emailController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -128,34 +105,31 @@ class _cadastroState extends State<cadastro> {
                           decoration: InputDecoration(
                             labelText: 'Ddd:',
                             suffixIcon: IconButton(
-                              onPressed: onPresseDddButton,
+                              onPressed: onPressedDddButton,
                               icon: const Icon(Icons.search),
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            cursorColor: const Color(0xFF7C4DFF),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextFormField(
+                          controller: stateController,
+                          validator: (value) {
+                            if (value!.isNotEmpty) {
+                              return null;
+                            } else {
+                              return "Você precisa digitar um endereço válido!";
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Endereço:',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                      controller: dddController,
-                      validator: (value) {
-                        if (value!.isNotEmpty) {
-                          return null;
-                        } else {
-                          return "Você precisa digitar um endereço válido!";
-                        }
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Endereço:',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
                         ),
-                        cursorColor: const Color(0xFF7C4DFF),
-                      ),
-                    ),
-                ),
                         SizedBox(height: 10),
                         TextFormField(
                           controller: senhaController,
@@ -194,28 +168,8 @@ class _cadastroState extends State<cadastro> {
                           ),
                           cursorColor: const Color(0xFF10397B),
                         ),
-
-                    Future<void> onPressedDddButton() async {
-                        String ddd = dddController.text;
-                        try {
-                          Ddd ddd = await DddApi().findAddressByDdd(ddd);
-                          stateController.text = ddd.state;
-                          citiesController.text = ddd.cities;
-
-                        } catch (e) {
-                          showSnackBar('Ocorreu um erro inesperado!');
-                        }
-                      }
-
-                      showSnackBar(String snackBarMessage) {
-                        SnackBar snackBar = SnackBar(
-                        content: Text(snackBarMessage),
-        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-
-
-            SizedBox(height: 20),
+                        SizedBox(height: 20),
+                        //
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -239,7 +193,6 @@ class _cadastroState extends State<cadastro> {
                                 ),
                               ),
                             ),
-
                           ],
                         ),
                         SizedBox(height: 15),
@@ -271,12 +224,30 @@ class _cadastroState extends State<cadastro> {
                     ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> onPressedDddButton() async {
+    String dddText = dddController.text;
+    try {
+      DDD ddd = await DddApi().findDddByDdd(dddText);
+      stateController.text = ddd.state!;
+      citiesController.text = ddd.cities![0];
+    } catch (e) {
+      showSnackBar('Ocorreu um erro inesperado!');
+    }
+  }
+
+  showSnackBar(String snackBarMessage) {
+    SnackBar snackBar = SnackBar(
+      content: Text(snackBarMessage),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   buildInputDecoration(String label, IconData iconData) {
@@ -302,8 +273,8 @@ class _cadastroState extends State<cadastro> {
       ),
     );
   }
-  Future<void> onPressed() async {
 
+  Future<void> onPressed() async {
     if (formKey.currentState!.validate()) {
       String email = emailController.text;
       String senha = senhaController.text;
@@ -314,4 +285,3 @@ class _cadastroState extends State<cadastro> {
     }
   }
 }
-
