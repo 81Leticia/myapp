@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/domain/encontreseumed.dart';
+import 'package:myapp/encontreseumed.dart';
 
 
 class Escolhahosp extends StatefulWidget {

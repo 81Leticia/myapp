@@ -1,6 +1,8 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:myapp/domain/medico.dart';
 import 'package:myapp/db/DBHelper.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MedicoDAO {
 
@@ -31,37 +33,4 @@ class MedicoDAO {
     });
   }
 
-  Future<Medico?> buscarMedicoPorId(int id) async {
-    final db = await DBHelper.instance.database;
-    final List<Map<String, dynamic>> maps = await db.query(
-      'medicos',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-
-    if (maps.isNotEmpty) {
-      return Medico.fromJson(maps.first);
-    }
-    return null;
-  }
-
-  Future<int> updateMedico(Medico medico) async {
-    final db = await DBHelper.instance.database;
-    return await db.update(
-      'medicos',
-      medico.toJson(),
-      where: 'id = ?',
-      whereArgs: [medico.id],
-    );
-  }
-
-  Future<int> deleteMedico(int id) async {
-    final db = await DBHelper.instance.database;
-    return await db.delete(
-      'medicos',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
 }
-
