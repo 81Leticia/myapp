@@ -1,7 +1,6 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
+import 'package:myapp/domain/login.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -14,6 +13,20 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF44A4D7),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Login()),
+                  (Route<dynamic> route) => false,
+            );
+          },
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.all(40),
