@@ -19,11 +19,7 @@ class _DetailPageState extends State<DetailPage> {
           icon: Icon(Icons.arrow_back),
           color: Colors.white,
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Login()),
-                  (Route<dynamic> route) => false,
-            );
+            Navigator.pop(context);
           },
         ),
       ),

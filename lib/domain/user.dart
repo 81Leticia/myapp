@@ -11,4 +11,11 @@ class User {
 
     return json;
   }
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      json['username'],
+      json['password'],
+    );
+  }
 }

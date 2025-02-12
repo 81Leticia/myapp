@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
           children: [
             const SizedBox(height: 16),
             Container(
-              height: 600,
+              height: 650,
               width: 400,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -49,15 +49,15 @@ class _LoginState extends State<Login> {
                     children: <Widget>[
                       const SizedBox(height: 15),
                       const Text(
-                        'Login',
+                        'Conecte-se',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 45,
+                          fontSize: 40,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text('Sign in to continue'),
+                      const Text('Faça login para continuar'),
                       const SizedBox(height: 30),
                       const SizedBox(height: 5),
                       TextFormField(
@@ -109,27 +109,7 @@ class _LoginState extends State<Login> {
                         child: const Text('Esqueceu a senha?'),
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: onPressed,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF44A4D7),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 32,
-                          ),
-                        ),
-                        child: const Text(
-                          'Entrar',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
+                      buildFutureBuilder(),
                       const SizedBox(height: 12),
                       RichText(
                         text: TextSpan(
@@ -168,30 +148,29 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> onPressed() async {
-
     if (formKey.currentState!.validate()) {
-
       String email = emailController.text;
       String senha = senhaController.text;
 
       setState(() {
         auth = UserDao().autenticar(email, senha);
       });
-
-      if (auth) {
-        SharedPrefs().setUser(true);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return DetailPage();
-            },
-          ),
-
-        );
-      } else {
-        print('E-mail e/ou Senha incorreto(s)');
-      }
+      //
+      //   if (auth) {
+      //     SharedPrefs().setUser(true);
+      //     Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) {
+      //           return DetailPage();
+      //         },
+      //       ),
+      //
+      //     );
+      //   } else {
+      //     print('E-mail e/ou Senha incorreto(s)');
+      //   }
+      // }
     }
   }
 
@@ -220,14 +199,13 @@ class _LoginState extends State<Login> {
         return buildButton();
       },
     );
-
   }
 
   buildButton({bool isLoading = false}) {
     return ElevatedButton(
-      onPressed: () => onPressed(context),
+      onPressed: () => onPressed(),
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF7C4DFF),
+        backgroundColor: const Color(0xFF44A4D7),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
         ),
@@ -248,5 +226,5 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
 }
+
