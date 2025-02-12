@@ -19,6 +19,7 @@ class _LoginState extends State<Login> {
   final senhaController = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   Future<bool>? auth;
 
   @override
@@ -173,12 +174,12 @@ class _LoginState extends State<Login> {
       String email = emailController.text;
       String senha = senhaController.text;
 
-      bool auth = await UserDao().autenticar(email, senha);
+      setState(() {
+        auth = UserDao().autenticar(email, senha);
+      });
 
       if (auth) {
         SharedPrefs().setUser(true);
-
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
