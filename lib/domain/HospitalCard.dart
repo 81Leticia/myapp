@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Hospital/cadastroHospital.dart';
-import 'package:untitled/db/Hospital_DAO.dart';
-import '../db/DBHelper.dart';
+import 'package:myapp/domain/CadrastoHopital.dart';
+import 'package:myapp/db/HospitalDAO.dart';
+import 'package:myapp/db/DB_Helper.dart';
 import 'DetailHospital.dart';
 import 'hospital.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import'package:untitled/Hospital/cadastroHospital.dart';
+import'package:myapp/domain/CadrastoHopital.dart';
 
 
 

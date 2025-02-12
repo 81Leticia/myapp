@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/db/Hospital_DAO.dart';
-import '../db/DBHelper.dart';
-import 'Hospital_Card.dart';
+import 'package:myapp/db/HospitalDAO.dart';
+import 'package:myapp/db/DB_Helper.dart';
+import 'HospitalCard.dart';
 import 'hospital.dart';
 
 class HospitalFormScreen extends StatefulWidget {

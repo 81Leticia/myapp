@@ -1,7 +1,7 @@
 
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import '../Hospital/hospital.dart';
+import 'package:myapp/domain/hospital.dart';
 
 class DBHelper {
 

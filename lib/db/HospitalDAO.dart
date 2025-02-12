@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:untitled/Hospital/hospital.dart';
-import 'package:untitled/db/DBHelper.dart';
+import 'package:myapp/domain/hospital.dart';
+import 'package:myapp/db/DB_Helper.dart';
 
 class HospitalDAO{
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../db/DBHelper.dart';
+import 'package:myapp/db/DB_Helper.dart';
 import 'hospital.dart';
 
 class HospitalDetalhes extends StatefulWidget {
