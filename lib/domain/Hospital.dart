@@ -30,13 +30,12 @@ class Hospital {
 
   Map<String, dynamic> toJson() {
     return {
-
       'nome': nome,
       'endereco': endereco,
       'cidade': cidade,
+      'cep': cep,
       'telefone': telefone,
       'email': email,
-      'cep': cep,
     };
   }
 }

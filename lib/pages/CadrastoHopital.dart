@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/api/cnpj_api.dart';
 import 'package:myapp/db/HospitalDAO.dart';
 import 'package:myapp/db/DB_Helper.dart';
-import 'HospitalCard.dart';
-import 'hospital.dart';
+import 'package:myapp/domain/hospital.dart';
+import 'package:myapp/domain/cnpj.dart';
+import 'package:myapp/pages/HospitalCard.dart';
 
 class HospitalFormScreen extends StatefulWidget {
   @override
@@ -18,6 +20,7 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
   final _telefoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _fotoUrlController = TextEditingController();
+  final _cnpjController = TextEditingController(); // Campo CNPJ
 
   Future<void> _saveHospital() async {
     if (_formKey.currentState!.validate()) {
@@ -30,27 +33,54 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
         email: _emailController.text,
       );
 
+      final hosp = HospitalDAO();
+      try {
+        await hosp.insertHospital(hospital);
 
-      final Hosp = HospitalDAO();
-      await Hosp.insertHospital(hospital);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Hospital salvo com sucesso!'))
+        );
 
+        _nomeController.clear();
+        _enderecoController.clear();
+        _cidadeController.clear();
+        _cepController.clear();
+        _telefoneController.clear();
+        _emailController.clear();
+        _fotoUrlController.clear();
+        _cnpjController.clear();
 
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Hospital salvo com sucesso!')));
-      print("Tudo certo");
-
-      _nomeController.clear();
-      _enderecoController.clear();
-      _cidadeController.clear();
-      _cepController.clear();
-      _telefoneController.clear();
-      _emailController.clear();
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => HospitalLista(),
+          ),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Erro ao salvar hospital: $e'))
+        );
+      }
     }
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) =>  HospitalLista(),
-      ),
-    );
+  }
+
+  Future<void> onPressedCnpjButton() async {
+    String cnpj = _cnpjController.text;
+    try {
+      Cnpj? cnpjData = await CnpjApi().findCnpj(cnpj);
+
+      if (cnpjData != null) {
+        _enderecoController.text = cnpjData.logradouro;
+        _cidadeController.text = cnpjData.municipio;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('CNPJ não encontrado ou inválido.'))
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erro ao buscar CNPJ: $e'))
+      );
+    }
   }
 
   @override
@@ -130,6 +160,23 @@ class _HospitalFormScreenState extends State<HospitalFormScreen> {
               TextFormField(
                 controller: _fotoUrlController,
                 decoration: InputDecoration(labelText: 'URL da Foto'),
+              ),
+              TextFormField(
+                controller: _cnpjController, // Campo CNPJ
+                decoration: InputDecoration(
+                  labelText: 'CNPJ',
+                  suffixIcon: IconButton(
+                    onPressed: onPressedCnpjButton,
+                    icon: const Icon(Icons.search),
+                  ),
+                ),
+                cursorColor: const Color(0xFF10397B), // Cor do cursor
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor, insira o CNPJ.';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 20),
               ElevatedButton(

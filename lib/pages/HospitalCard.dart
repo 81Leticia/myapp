@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/domain/CadrastoHopital.dart';
 import 'package:myapp/db/HospitalDAO.dart';
 import 'package:myapp/db/DB_Helper.dart';
-import 'DetailHospital.dart';
-import 'hospital.dart';
+import 'package:myapp/domain/Hospital.dart';
+import 'package:myapp/pages/CadrastoHopital.dart';
+import 'package:myapp/db/HospitalDAO.dart';
+import 'package:myapp/pages/DetailHospital.dart';
 
 class HospitalLista extends StatefulWidget {
 
@@ -21,7 +22,7 @@ class _HospitalListaState extends State<HospitalLista> {
   }
 
   loadData() async {
-    hospitais = await HospitalDAO().listarHospitais();
+    hospitais = (await HospitalDAO().listarHospital()).cast<Hospital>();
     setState(() {});
   }
 
