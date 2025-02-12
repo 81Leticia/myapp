@@ -17,7 +17,9 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Future<bool>? auth;
 
   @override
   Widget build(BuildContext context) {
@@ -191,4 +193,59 @@ class _LoginState extends State<Login> {
       }
     }
   }
+
+  buildFutureBuilder() {
+    return FutureBuilder(
+      future: auth,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return buildButton(isLoading: true);
+        }
+
+        if (snapshot.hasData) {
+          bool authentication = snapshot.data!;
+          if (authentication) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return DetailPage();
+                },
+              ),
+            );
+          }
+        }
+
+        return buildButton();
+      },
+    );
+
+  }
+
+  buildButton({bool isLoading = false}) {
+    return ElevatedButton(
+      onPressed: () => onPressed(context),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF7C4DFF),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: 32,
+        ),
+      ),
+      child: isLoading
+          ? Center(child: CircularProgressIndicator(color: Colors.white,))
+          : const Text(
+        'Entrar',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+    );
+  }
+
 }
