@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/domain/DetailPage.dart';
+import 'package:myapp/db/shared_prefs.dart'; // Verifique se a importação está correta
 import 'package:myapp/domain/cadastro.dart';
 import 'package:myapp/domain/login.dart';
 
@@ -20,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
   checkUserStatus() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    bool userStatus = await const cadastro().getUser();
+    bool userStatus = await SharedPrefs.getUser();  // Alterado para usar a classe SharedPrefs
 
     if (userStatus) {
       Navigator.pushReplacement(

@@ -1,18 +1,14 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefs {
-  setUser(bool value) async {
-    SharedPreferences instance = await SharedPreferences.getInstance();
-    instance.setBool('USER', value);
+
+  static Future<bool> getUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('userStatus') ?? false;  // Retorna o status do usuário, ou false caso não encontrado
   }
 
-  getUser() async {
-    SharedPreferences instance = await SharedPreferences.getInstance();
-    bool? userStatus = instance.getBool('USER');
-
-
-
-
-    return userStatus ?? false;
+  static Future<void> setUser(bool status) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('userStatus', status);
   }
 }

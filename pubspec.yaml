@@ -37,9 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts:
 
-  shared_preferences:
-  sqflite:
-  path:
+  shared_preferences: ^2.0.15
+  sqflite: ^2.0.0+4
+  path: ^1.8.0
   dio: ^5.7.0
 
 
