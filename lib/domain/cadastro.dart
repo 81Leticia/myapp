@@ -47,7 +47,7 @@ class _cadastroState extends State<cadastro> {
             children: [
 
               Container(
-                height: 600,
+                height: 650,
                 width: 400,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -69,18 +69,19 @@ class _cadastroState extends State<cadastro> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Seja bem-vindo!',
+                                  'CADASTRE-SE',
                                   style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                const Text('Preencha os campos com suas informaçoes.'),
                               ],
                             ),
                           ),
                         ),
 
-                        SizedBox(height: 10),
+                        SizedBox(height: 30),
                         TextFormField(
                           controller: emailController,
                           autovalidateMode: AutovalidateMode.onUserInteraction,

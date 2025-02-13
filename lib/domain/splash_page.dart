@@ -20,9 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   checkUserStatus() async {
     await Future.delayed(const Duration(seconds: 3));
 
-
     bool userStatus = await const cadastro().getUser();
-
 
     if (userStatus) {
       Navigator.pushReplacement(
@@ -45,19 +43,16 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color(0xFFABD744),
+        color: const Color(0xFF44A4D7),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              'SaúdeAPP',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 45,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
+            const SizedBox(height: 20),
+            Image.asset(
+              'assets/hosp.png',
+              width: 400,
+              height: 700,
             ),
           ],
         ),
