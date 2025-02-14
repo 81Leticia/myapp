@@ -1,41 +1,33 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+class MapPage extends StatefulWidget {
+  Location location;
 
+  MapPage({super.key, required this.location});
 
-class MapWidget extends StatefulWidget {
   @override
-  _MapWidgetState createState() => _MapWidgetState();
+  State<MapPage> createState() => MapSampleState();
 }
 
-
-class _MapWidgetState extends State<MapWidget> {
-  late GoogleMapController mapController;
-
-
-  final LatLng _initialPosition = LatLng(-23.550520, -46.633308); // São Paulo
-
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
+class MapSampleState extends State<MapPage> {
+  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 400, // Define a altura do mapa
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey, width: 0.8),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(70),
-        child: GoogleMap(
-          onMapCreated: _onMapCreated,
+    return SafeArea(
+      child: Scaffold(
+        body: GoogleMap(
+          mapType: MapType.normal,
           initialCameraPosition: CameraPosition(
-            target: _initialPosition,
-            zoom: 4,
+            target: LatLng(widget.location.latitude , widget.location.longitude),
+            zoom: 9,
           ),
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
           markers: {
             Marker(
               markerId: MarkerId("consulta"),
@@ -48,12 +40,3 @@ class _MapWidgetState extends State<MapWidget> {
     );
   }
 }
-
-
-
-
-
-
-
-
-

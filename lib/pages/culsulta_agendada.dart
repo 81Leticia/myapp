@@ -2,14 +2,6 @@ import 'package:flutter/material.dart';
 import '../widget/map_widget.dart';
 
 
-
-
-
-
-
-
-
-
 class ConsultaAgendada extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
