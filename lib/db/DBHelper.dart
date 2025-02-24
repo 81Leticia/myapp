@@ -30,49 +30,28 @@ class DBHelper {
       especialidade TEXT NOT NULL,
       crm TEXT NOT NULL,
       email TEXT NOT NULL,
-      telefone TEXT NOT NULL
+      telefone TEXT NOT NULL,
+      cidade TEXT,
+      estado TEXT
     )
     ''';
     await db.execute(tableSQL);
   }
 
-  Future<int> insertMedico(Medico medico, String crm, String email, String telefone) async {
+  Future<int> insertMedico(Map<String, dynamic> medicoData) async {
     final db = await instance.database;
-    Map<String, dynamic> medicoMap = medico.toJson();
-    medicoMap['crm'] = crm;
-    medicoMap['email'] = email;
-    medicoMap['telefone'] = telefone;
-    return await db.insert('medicos', medicoMap);
+    return await db.insert('medicos', medicoData);
   }
 
   Future<List<Medico>> getMedicos() async {
     final db = await instance.database;
     final List<Map<String, dynamic>> result = await db.query('medicos');
-
     return result.map((json) => Medico.fromJson(json)).toList();
   }
 
-  Future<int> updateMedico(Medico medico) async {
-    final db = await instance.database;
-    return await db.update(
-      'medicos',
-      medico.toJson(),
-      where: 'id = ?',
-      whereArgs: [medico.id],
-    );
-  }
-
-  Future<int> deleteMedico(int id) async {
-    final db = await instance.database;
-    return await db.delete(
-      'medicos',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-  }
   Future<List<Medico>> listarMedicos() async {
-    final db = await database;  
-    final List<Map<String, dynamic>> result = await db.query('medicos'); 
-    return result.map((json) => Medico.fromJson(json)).toList(); 
+    final db = await database;
+    final List<Map<String, dynamic>> result = await db.query('medicos');
+    return result.map((json) => Medico.fromJson(json)).toList();
   }
 }

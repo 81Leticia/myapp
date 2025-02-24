@@ -1,118 +1,148 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:myapp/db/DBHelper.dart';
+import 'package:myapp/api/DDD.dart';
 
 class CadastroMedico extends StatefulWidget {
   @override
-  _CadastroMedicoState createState() => _CadastroMedicoState();
+  State<CadastroMedico> createState() => _CadastroMedicoState();
 }
 
 class _CadastroMedicoState extends State<CadastroMedico> {
-  final TextEditingController _nomeController = TextEditingController();
-  final TextEditingController _especialidadeController = TextEditingController();
-  final TextEditingController _crmController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _telefoneController = TextEditingController();
-
-  final DBHelper _dbHelper = DBHelper.instance;
-
-  void _salvarMedico() async {
-    String nome = _nomeController.text;
-    String especialidade = _especialidadeController.text;
-    String crm = _crmController.text;
-    String email = _emailController.text;
-    String telefone = _telefoneController.text;
-
-    if (nome.isEmpty || especialidade.isEmpty || crm.isEmpty || email.isEmpty || telefone.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Por favor, preencha todos os campos")),
-      );
-      return;
-    }
-
-    try {
-      Database db = await _dbHelper.database;
-      await db.insert('medicos', {
-        'nome': nome,
-        'especialidade': especialidade,
-        'crm': crm,
-        'email': email,
-        'telefone': telefone,
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Médico cadastrado com sucesso!")),
-      );
-
-      _nomeController.clear();
-      _especialidadeController.clear();
-      _crmController.clear();
-      _emailController.clear();
-      _telefoneController.clear();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Erro ao cadastrar médico: $e")),
-      );
-    }
-  }
+  final TextEditingController nomeController = TextEditingController();
+  final TextEditingController especialidadeController = TextEditingController();
+  final TextEditingController crmController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController telefoneController = TextEditingController();
+  final TextEditingController localizacaoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastro de Médicos"),
-        centerTitle: true,
+        title: Text('Cadastrar Médico'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTextField("Nome", _nomeController),
-              _buildTextField("Especialidade", _especialidadeController),
-              _buildTextField("CRM", _crmController),
-              _buildTextField("E-mail", _emailController),
-              _buildTextField("Telefone", _telefoneController),
-              SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  onPressed: _salvarMedico,
-                  child: Text("Salvar Médico"),
-                ),
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            TextField(
+              controller: nomeController,
+              decoration: InputDecoration(labelText: 'Nome do Médico'),
+            ),
+            SizedBox(height: 15),
+            TextField(
+              controller: especialidadeController,
+              decoration: InputDecoration(labelText: 'Especialidade'),
+            ),
+            SizedBox(height: 15),
+            TextField(
+              controller: crmController,
+              decoration: InputDecoration(labelText: 'CRM'),
+            ),
+            SizedBox(height: 15),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: 'E-mail'),
+            ),
+            SizedBox(height: 15),
+            buildTextField(
+              label: 'Telefone (com DDD)',
+              controller: telefoneController,
+              icon: Icons.phone,
+              isNumeric: true,
+              onChanged: (_) => buscarDDD(),
+            ),
+            SizedBox(height: 15),
+            buildTextField(
+              label: 'Localização',
+              controller: localizacaoController,
+              icon: Icons.location_on,
+              enabled: false,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                if (nomeController.text.isNotEmpty &&
+                    especialidadeController.text.isNotEmpty &&
+                    crmController.text.isNotEmpty &&
+                    emailController.text.isNotEmpty &&
+                    telefoneController.text.isNotEmpty) {
+                  Map<String, dynamic> medicoData = {
+                    'nome': nomeController.text,
+                    'especialidade': especialidadeController.text,
+                    'crm': crmController.text,
+                    'email': emailController.text,
+                    'telefone': telefoneController.text,
+                    'cidade': localizacaoController.text.split(',').first.trim(),
+                    'estado': localizacaoController.text.split(',').last.trim(),
+                  };
+
+
+                  await DBHelper.instance.insertMedico(medicoData);
+
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Médico cadastrado com sucesso!')),
+                  );
+
+
+                  Navigator.pop(context);
+                }
+              },
+              child: Text('Salvar'),
+            ),
+          ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.blueAccent,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: 'Calendário'),
-          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
-          BottomNavigationBarItem(icon: Icon(Icons.edit_sharp), label: 'Agenda'),
-          BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Ficha'),
-          BottomNavigationBarItem(icon: Icon(Icons.view_agenda_rounded), label: 'B'),
-        ],
       ),
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(),
+
+  void buscarDDD() async {
+    String telefone = telefoneController.text.trim();
+
+    if (telefone.length >= 2) {
+      String ddd = telefone.substring(0, 2);
+      var resultado = await DddApiService.buscarLocalizacaoPorDDD(ddd);
+
+      if (resultado != null) {
+        setState(() {
+          localizacaoController.text =
+          '${resultado['cidade']}, ${resultado['estado']}';
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('DDD inválido ou não encontrado')),
+        );
+      }
+    }
+  }
+
+
+  Widget buildTextField({
+    required String label,
+    required TextEditingController controller,
+    required IconData icon,
+    bool isNumeric = false,
+    bool enabled = true,
+    void Function(String)? onChanged,
+  }) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
+      cursorColor: const Color(0xFF10397B),
+      enabled: enabled,
+      onChanged: onChanged,
+      decoration: InputDecoration(
+        prefixIcon: Icon(icon),
+        labelText: label,
+        floatingLabelStyle: const TextStyle(color: Color(0xFF10397B)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: const BorderSide(color: Color(0xFF10397B), width: 2),
         ),
       ),
     );
   }
 }
-

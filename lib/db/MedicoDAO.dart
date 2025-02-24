@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:myapp/domain/medico.dart';
 import 'package:myapp/db/DBHelper.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class MedicoDAO {
