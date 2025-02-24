@@ -28,7 +28,7 @@ class _ListarMedicosState extends State<ListarMedicos> {
         title: Text('Médicos Cadastrados'),
         actions: [
           IconButton(
-            icon: Icon(Icons.person_add_alt_1),
+            icon: Icon(Icons.person_add_alt_1, color: Colors.blueAccent,),
             onPressed: () async {
               await Navigator.push(
                 context,

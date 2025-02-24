@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/db/DBHelper.dart';
 import 'package:myapp/api/DDD.dart';
+import'package:myapp/domain/medico.dart';
 
 class CadastroMedico extends StatefulWidget {
   @override
@@ -62,31 +63,46 @@ class _CadastroMedicoState extends State<CadastroMedico> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                if (nomeController.text.isNotEmpty &&
-                    especialidadeController.text.isNotEmpty &&
-                    crmController.text.isNotEmpty &&
-                    emailController.text.isNotEmpty &&
-                    telefoneController.text.isNotEmpty) {
-                  Map<String, dynamic> medicoData = {
-                    'nome': nomeController.text,
-                    'especialidade': especialidadeController.text,
-                    'crm': crmController.text,
-                    'email': emailController.text,
-                    'telefone': telefoneController.text,
-                    'cidade': localizacaoController.text.split(',').first.trim(),
-                    'estado': localizacaoController.text.split(',').last.trim(),
-                  };
+                if (nomeController.text.isEmpty ||
+                    especialidadeController.text.isEmpty ||
+                    crmController.text.isEmpty ||
+                    emailController.text.isEmpty ||
+                    telefoneController.text.isEmpty ||
+                    localizacaoController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Por favor, preencha todos os campos!')),
+                  );
+                  return;
+                }
 
+                print('Nome: ${nomeController.text}');
+                print('Especialidade: ${especialidadeController.text}');
+                print('CRM: ${crmController.text}');
+                print('Email: ${emailController.text}');
+                print('Telefone: ${telefoneController.text}');
+                print('Localização: ${localizacaoController.text}');
 
+                Map<String, dynamic> medicoData = {
+                  'nome': nomeController.text,
+                  'especialidade': especialidadeController.text,
+                  'crm': crmController.text,
+                  'email': emailController.text,
+                  'telefone': telefoneController.text,
+                  'cidade': localizacaoController.text.split(',').first.trim(),
+                  'estado': localizacaoController.text.split(',').last.trim(),
+                };
+
+                try {
                   await DBHelper.instance.insertMedico(medicoData);
-
-
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Médico cadastrado com sucesso!')),
                   );
-
-
                   Navigator.pop(context);
+                } catch (e) {
+                  print(e);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Erro ao salvar médico: $e')),
+                  );
                 }
               },
               child: Text('Salvar'),
@@ -96,7 +112,6 @@ class _CadastroMedicoState extends State<CadastroMedico> {
       ),
     );
   }
-
 
   void buscarDDD() async {
     String telefone = telefoneController.text.trim();

@@ -54,4 +54,5 @@ class DBHelper {
     final List<Map<String, dynamic>> result = await db.query('medicos');
     return result.map((json) => Medico.fromJson(json)).toList();
   }
+
 }
