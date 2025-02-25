@@ -1,26 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/pages/culsulta_agendada.dart';
-
-
+import 'package:myapp/pages/fichaPessoal.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    const MaterialApp(
+      home: FichaPessoal(),
+    )
+  );
 }
-
-
-class MyApp extends StatelessWidget {
-  Widget build(BuildContext contex) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ConsultaAgendada(),
-    );
-  }
-}
-
-
-
-
-
-
-
-
