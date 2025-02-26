@@ -118,7 +118,7 @@ class _FichaPessoalState extends State<FichaPessoal> {
               suffixIcon: IconButton(
                 icon: const Icon(
                   Icons.location_on,
-                  color: Colors.deepPurple,
+                  color: Colors.blue,
                 ),
                 onPressed: () async {
                   String endereco = enderecoController.text;
